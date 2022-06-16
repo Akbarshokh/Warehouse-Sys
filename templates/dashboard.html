@@ -1,0 +1,479 @@
+{% extends 'base.html' %}
+{% block content %}
+            <!-- page title area start -->
+            <div class="page-title-area">
+                <div class="row align-items-center">
+                    <div class="col-sm-6">
+                        <div class="breadcrumbs-area clearfix">
+                            <h4 class="page-title pull-left">Dashboard</h4>
+                            <ul class="breadcrumbs pull-left">
+                                <li><a href="{%url "dashboard_url"%}">Home</a></li>
+                                <li><span>Dashboard</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 clearfix">
+                        <div class="user-profile pull-right">
+                            <img class="avatar user-thumb" src="static/images/author/avatar.png" alt="avatar">
+                            <h4 class="user-name dropdown-toggle" data-toggle="dropdown">{{user.username}} <i class="fa fa-angle-down"></i></h4>
+                            <div class="dropdown-menu">                                
+                                <a class="dropdown-item" href="{% url 'logout_url' %}">Log Out</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- page title area end -->
+            <div class="main-content-inner">
+                <!-- sales report area start -->
+                <div class="sales-report-area mt-5 mb-5">
+                    <div class="row">
+                        <div class="col-md-6 mt-5 mb-3">
+                            <div class="card">
+                                <div class="seo-fact sbg1"><div class="chartjs-size-monitor" style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+                                    <div class="p-4 d-flex justify-content-between align-items-center">
+                                        <div class="seofct-icon"><i class="ti-pie-chart"></i> Ombordagi sut hajmi</div>
+                                        <h2>{{milk_litr}}</h2>
+                                    </div>
+                                    <canvas id="seolinechart1" height="55" width="333" style="display: block; width: 333px; height: 55px;" class="chartjs-render-monitor"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mt-md-5 mb-3">
+                            <div class="card">
+                                <div class="seo-fact sbg2">
+                                    <div class="chartjs-size-monitor" style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
+                                    <div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                                    <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div>
+                                    <div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                                    <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+                                    <div class="p-4 d-flex justify-content-between align-items-center">
+                                        <div class="seofct-icon"><i class="ti-server"></i>Umumiy maxsulotlar soni</div>
+                                        <h2>{{prod_quantity}}</h2>
+                                    </div>
+                                    <canvas id="seolinechart2" height="55" width="333" style="display: block; width: 333px; height: 55px;" class="chartjs-render-monitor"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <!-- sales report area end -->
+                <div class="row">
+                    <div class="col-4">
+                        <button type="button" class="btn btn-primary btn-flat btn-lg mt-3" data-toggle="modal" data-target="#exampleModalLong">Sut qo`shish +</button>
+                        
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModalLong">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Sut Maxsulotini qo'shish</h5>
+                                        <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                                    </div>
+                                    <form action="{% url 'add_milk_url' %}" method="post">
+                                        {% csrf_token %}
+                                    <div class="modal-body">
+                                            <div class="form-group">
+                                                <label for="example-url-input" class="col-form-label">Necha litr qo`shmoqchisiz?</label>
+                                                <input class="form-control" type="number" id="example-url-input" placeholder='{{milk_litr}}' name='litr'>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Ortga Qaytish</button>
+                                            <button type="submit" class="btn btn-primary">Saqlash</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <button type="button" class="btn btn-primary btn-flat btn-lg mt-3" data-toggle="modal" data-target="#exampleModalLong2">Maxsulot Olish +</button>
+                        
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModalLong2">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Yangi Maxsulot Olish</h5>
+                                        <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                                    </div>
+                                    <form action="{% url 'make_product_url' %}" method="post">
+                                        {% csrf_token %}
+                                    <div class="modal-body">
+                                            <div class="form-group">
+                                                <label class="col-form-label">Qanday maxsulot olmoqchisiz?</label>
+                                                
+                                                <select class="form-control" name="product">
+                                                    {% for product in products %}
+                                                        <option value="{{product.id}}" >{{product.name}}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="example-url-input" class="col-form-label">Necha litr olmoqchisiz?</label>
+                                                <input class="form-control" type="number" id="example-url-input" placeholder='5' name='quantity'>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Ortga Qaytish</button>
+                                            <button type="submit" class="btn btn-primary">Saqlash</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <button type="button" class="btn btn-primary btn-flat btn-lg mt-3" data-toggle="modal" data-target="#exampleModalLong3">Maxsulot qo`shish +</button>
+                        
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModalLong3">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Yangi Maxsulot Olish</h5>
+                                        <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                                    </div>
+                                    <form action="{% url 'add_product_url' %}" method="post">
+                                        {% csrf_token %}
+                                    <div class="modal-body">
+                                            <div class="form-group">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="example-url-input" class="col-form-label">Maxsulot nomi</label>
+                                                <input class="form-control" type="text" id="example-url-input" placeholder='Smetana' name='name'>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Ortga Qaytish</button>
+                                            <button type="submit" class="btn btn-primary">Saqlash</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                   
+                </div>
+                
+                
+                <!-- market value area start -->
+                <div class="row mt-5 mb-5">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-sm-flex justify-content-between align-items-center">
+                                    <h4 class="header-title mb-0">Mahsulotlar Ro'yxati</h4>
+                                    <div class="search-box pull-left">
+                                        <form method="get" action="{% url 'products_url' %}">
+                                            <input type="text" name="q" placeholder="Qidiruv..." required>
+                                            <i class="ti-search"></i>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="market-status-table mt-4">
+                                    <div class="table-responsive">
+                                        <table class="dbkit-table">
+                                            <tr class="heading-td">
+                                                <td class="mv-icon">№</td>
+                                                <td class="mv-icon">Nomi</td>
+                                                <td class="coin-name">Hajmi</td>
+                                                <td class="coin-name">Qo`shish</td>
+                                                <td class="coin-name">Ayrish</td>
+                                                <td class="coin-name">O`chirish</td>
+                                            </tr>
+                                            {% for product in table_products %}
+                                            <tr>
+                                                <td class="coin-name">{{forloop.counter}}</td>
+                                                <td class="coin-name">{{product.name}}</td>
+                                                <td class="coin-name">{{product.litr}}</td>
+                                                <td class="coin-name">
+                                                    
+                                                    <span class="ti-plus"  data-toggle="modal" data-target="#{{forloop.counter}}1"></span>
+                                                        <!-- + -->
+                                                            <div class="modal fade" id="{{forloop.counter}}1">
+                                                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h5 class="modal-title">{{product.product_to}}</h5>
+                                                                            <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                                                                        </div>
+                                                                        <form action="{% url 'update_product_url' %}" method="post">
+                                                                            {% csrf_token %}
+                                                                            <div class="modal-body">
+                                                                                <div class="form-group">
+                                                                                    <label for="example-tel-input2" class="col-form-label">Necha litr qo`shmoqchisiz</label>
+                                                                                    <input class="form-control" type="text" id="example-tel-input2" placeholder='7' name='litr' >
+                                                                                    <input type="hidden" name="prod_id" value={{product.id}}>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Ortga Qaytish</button>
+                                                                                <button type="submit" class="btn btn-primary">Saqlash</button>
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                </td>
+
+                                                <td class="coin-name">
+                                                        <span class="ti-minus"  data-toggle="modal" data-target="#{{forloop.counter}}2"></span>
+                                                        <!-- - -->
+                                                            <div class="modal fade" id="{{forloop.counter}}2">
+                                                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h5 class="modal-title">{{product.product_to}}</h5>
+                                                                            <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                                                                        </div>
+                                                                        <form action="{% url 'substract_product_url' %}" method="post">
+                                                                            {% csrf_token %}
+                                                                            <div class="modal-body">
+                                                                                <label for="example-tel-input2" class="col-form-label">Necha litr ayrimoqchisiz?</label>
+                                                                                <input class="form-control" type="text" id="example-tel-input2" placeholder='Misol: 7 litr' name='litr' >
+                                                                                <input type="hidden" name="prod_id" value={{product.id}}>
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Ortga Qaytish</button>
+                                                                                <button type="submit" class="btn btn-primary">Saqlash</button>
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                </td>
+
+                                                <td class="coin-name">
+                                                    <span class="ti-trash" data-toggle="modal" data-target="#{{forloop.counter}}"></span> 
+                                                        <!-- Modal -->
+                                                        <div class="modal fade" id="{{forloop.counter}}">
+                                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title">{{product.product_to}}</h5>
+                                                                        <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <p> Siz maxsulotni o`chirmoqchimisiz?</p>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <form action="{% url 'delete_product_url' %}" method="post">
+                                                                            {% csrf_token %}
+                                                                            <input type="hidden" value={{product.id}} name='prod_id' >
+                                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Ortga Qaytish</button>
+                                                                            <button type="submit" class="btn btn-primary">Saqlash</button>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>                                                   
+                                                </td>
+                                            </tr>   
+                                            {% endfor %}
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- market value area end -->
+                <!-- row area start -->
+           
+                
+                <!-- row area start-->
+            </div>
+        </div>
+        <!-- main content area end -->
+        <!-- footer area start-->
+        <footer>
+            <div class="footer-area">
+                <p>©Akbarshokh. All right reserved. Template by <a href="https://colorlib.com/wp/">Colorlib</a>.</p>
+            </div>
+        </footer>
+        <!-- footer area end-->
+    </div>
+    <!-- page container area end -->
+    <!-- offset area start -->
+    <div class="offset-area">
+        <div class="offset-close"><i class="ti-close"></i></div>
+        <ul class="nav offset-menu-tab">
+            <li><a class="active" data-toggle="tab" href="#activity">Activity</a></li>
+            <li><a data-toggle="tab" href="#settings">Settings</a></li>
+        </ul>
+        <div class="offset-content tab-content">
+            <div id="activity" class="tab-pane fade in show active">
+                <div class="recent-activity">
+                    <div class="timeline-task">
+                        <div class="icon bg1">
+                            <i class="fa fa-envelope"></i>
+                        </div>
+                        <div class="tm-title">
+                            <h4>Rashed sent you an email</h4>
+                            <span class="time"><i class="ti-time"></i>09:35</span>
+                        </div>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse distinctio itaque at.
+                        </p>
+                    </div>
+                    <div class="timeline-task">
+                        <div class="icon bg2">
+                            <i class="fa fa-check"></i>
+                        </div>
+                        <div class="tm-title">
+                            <h4>Added</h4>
+                            <span class="time"><i class="ti-time"></i>7 Minutes Ago</span>
+                        </div>
+                        <p>Lorem ipsum dolor sit amet consectetur.
+                        </p>
+                    </div>
+                    <div class="timeline-task">
+                        <div class="icon bg2">
+                            <i class="fa fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="tm-title">
+                            <h4>You missed you Password!</h4>
+                            <span class="time"><i class="ti-time"></i>09:20 Am</span>
+                        </div>
+                    </div>
+                    <div class="timeline-task">
+                        <div class="icon bg3">
+                            <i class="fa fa-bomb"></i>
+                        </div>
+                        <div class="tm-title">
+                            <h4>Member waiting for you Attention</h4>
+                            <span class="time"><i class="ti-time"></i>09:35</span>
+                        </div>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse distinctio itaque at.
+                        </p>
+                    </div>
+                    <div class="timeline-task">
+                        <div class="icon bg3">
+                            <i class="ti-signal"></i>
+                        </div>
+                        <div class="tm-title">
+                            <h4>You Added Kaji Patha few minutes ago</h4>
+                            <span class="time"><i class="ti-time"></i>01 minutes ago</span>
+                        </div>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse distinctio itaque at.
+                        </p>
+                    </div>
+                    <div class="timeline-task">
+                        <div class="icon bg1">
+                            <i class="fa fa-envelope"></i>
+                        </div>
+                        <div class="tm-title">
+                            <h4>Ratul Hamba sent you an email</h4>
+                            <span class="time"><i class="ti-time"></i>09:35</span>
+                        </div>
+                        <p>Hello sir , where are you, i am egerly waiting for you.
+                        </p>
+                    </div>
+                    <div class="timeline-task">
+                        <div class="icon bg2">
+                            <i class="fa fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="tm-title">
+                            <h4>Rashed sent you an email</h4>
+                            <span class="time"><i class="ti-time"></i>09:35</span>
+                        </div>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse distinctio itaque at.
+                        </p>
+                    </div>
+                    <div class="timeline-task">
+                        <div class="icon bg2">
+                            <i class="fa fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="tm-title">
+                            <h4>Rashed sent you an email</h4>
+                            <span class="time"><i class="ti-time"></i>09:35</span>
+                        </div>
+                    </div>
+                    <div class="timeline-task">
+                        <div class="icon bg3">
+                            <i class="fa fa-bomb"></i>
+                        </div>
+                        <div class="tm-title">
+                            <h4>Rashed sent you an email</h4>
+                            <span class="time"><i class="ti-time"></i>09:35</span>
+                        </div>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse distinctio itaque at.
+                        </p>
+                    </div>
+                    <div class="timeline-task">
+                        <div class="icon bg3">
+                            <i class="ti-signal"></i>
+                        </div>
+                        <div class="tm-title">
+                            <h4>Rashed sent you an email</h4>
+                            <span class="time"><i class="ti-time"></i>09:35</span>
+                        </div>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse distinctio itaque at.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div id="settings" class="tab-pane fade">
+                <div class="offset-settings">
+                    <h4>General Settings</h4>
+                    <div class="settings-list">
+                        <div class="s-settings">
+                            <div class="s-sw-title">
+                                <h5>Notifications</h5>
+                                <div class="s-swtich">
+                                    <input type="checkbox" id="switch1" />
+                                    <label for="switch1">Toggle</label>
+                                </div>
+                            </div>
+                            <p>Keep it 'On' When you want to get all the notification.</p>
+                        </div>
+                        <div class="s-settings">
+                            <div class="s-sw-title">
+                                <h5>Show recent activity</h5>
+                                <div class="s-swtich">
+                                    <input type="checkbox" id="switch2" />
+                                    <label for="switch2">Toggle</label>
+                                </div>
+                            </div>
+                            <p>The for attribute is necessary to bind our custom checkbox with the input.</p>
+                        </div>
+                        <div class="s-settings">
+                            <div class="s-sw-title">
+                                <h5>Show your emails</h5>
+                                <div class="s-swtich">
+                                    <input type="checkbox" id="switch3" />
+                                    <label for="switch3">Toggle</label>
+                                </div>
+                            </div>
+                            <p>Show email so that easily find you.</p>
+                        </div>
+                        <div class="s-settings">
+                            <div class="s-sw-title">
+                                <h5>Show Task statistics</h5>
+                                <div class="s-swtich">
+                                    <input type="checkbox" id="switch4" />
+                                    <label for="switch4">Toggle</label>
+                                </div>
+                            </div>
+                            <p>The for attribute is necessary to bind our custom checkbox with the input.</p>
+                        </div>
+                        <div class="s-settings">
+                            <div class="s-sw-title">
+                                <h5>Notifications</h5>
+                                <div class="s-swtich">
+                                    <input type="checkbox" id="switch5" />
+                                    <label for="switch5">Toggle</label>
+                                </div>
+                            </div>
+                            <p>Use checkboxes when looking for yes or no answers.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- offset area end -->
+{% endblock content %}
